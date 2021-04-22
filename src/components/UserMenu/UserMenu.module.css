@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+.avatar {
+  margin-right: 4;
+  border-radius: 50%;
+}
+.name {
+  color: white;
+  margin-right: 12px;
+  margin-left: 5px;
+}
+
+@media (max-width: 700px) {
+  .btn {
+    font-size: 10px;
+    padding: 3px;
+  }
+  .name {
+    width: 100px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

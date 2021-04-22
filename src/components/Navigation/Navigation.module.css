@@ -1,0 +1,9 @@
+.link {
+  display: inline-flex;
+}
+@media (max-width: 423px) {
+  .link {
+    align-items: flex-start;
+    padding: 0;
+  }
+}
