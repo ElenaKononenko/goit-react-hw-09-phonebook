@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import PropTypes from 'prop-types';
 import operations from '../../redux/operations';
@@ -14,29 +14,32 @@ export default function ContactForm() {
   const valueFilter = useSelector(getAllContacts);
   const isLoading = useSelector(getLoading);
 
-  const handleInputChange = e => {
+  const handleInputChange = useCallback(e => {
     const { name, value } = e.currentTarget;
     name === 'name' ? setName(value) : setNumber(value);
-  };
+  }, []);
 
   const reset = () => {
     setName('');
     setNumber('');
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const uniqueContact = valueFilter.find(
-      item => item.name.toLowerCase() === name.toLocaleLowerCase(),
-    );
-    if (!uniqueContact) {
-      dispatch(operations.addContact({ name, number }));
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      const uniqueContact = valueFilter.find(
+        item => item.name.toLowerCase() === name.toLocaleLowerCase(),
+      );
+      if (!uniqueContact) {
+        dispatch(operations.addContact({ name, number }));
+        reset();
+        return;
+      }
+      alert(`${name} is already in contacts`);
       reset();
-      return;
-    }
-    alert(`${name} is already in contacts`);
-    reset();
-  };
+    },
+    [valueFilter, name, dispatch, number],
+  );
 
   return (
     <>

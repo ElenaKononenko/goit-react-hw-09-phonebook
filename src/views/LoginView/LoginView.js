@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import authOperations from '../../redux/auth/auth-operations';
 import { Form, Button } from 'react-bootstrap';
@@ -14,12 +14,15 @@ export default function LoginView() {
     name === 'email' ? setEmail(value) : setPassword(value);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(authOperations.logIn({ email, password }));
-    setEmail('');
-    setPassword('');
-  };
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(authOperations.logIn({ email, password }));
+      setEmail('');
+      setPassword('');
+    },
+    [dispatch, email, password],
+  );
   return (
     <section>
       <h1 className={s.title}>Sign In</h1>

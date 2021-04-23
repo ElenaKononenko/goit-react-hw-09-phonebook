@@ -24,26 +24,28 @@ export default function App() {
   return (
     <Container>
       <AppBar />
-      <Suspense fallback={<Spinner animation="border" variant="info" />}>
+      <Suspense
+        fallback={
+          <Spinner animation="border" variant="info" className="loaderApp" />
+        }
+      >
         <Switch>
-          <PublicRoute exact path="/" component={HomeView} />
-          <PublicRoute
-            path="/register"
-            restricted
-            component={RegisterView}
-            redirectTo="/contacts"
-          />
-          <PublicRoute
-            path="/login"
-            restricted
-            component={LoginView}
-            redirectTo="/contacts"
-          />
-          <PrivateRoute
-            path="/contacts"
-            component={ContactsView}
-            redirectTo="/login"
-          />
+          <PublicRoute exact path="/">
+            <HomeView />
+          </PublicRoute>
+
+          <PublicRoute path="/register" restricted redirectTo="/contacts">
+            <RegisterView />
+          </PublicRoute>
+
+          <PublicRoute path="/login" restricted redirectTo="/contacts">
+            <LoginView />
+          </PublicRoute>
+
+          <PrivateRoute path="/contacts" redirectTo="/login">
+            <ContactsView />
+          </PrivateRoute>
+
           <Redirect to="/" />
         </Switch>
       </Suspense>

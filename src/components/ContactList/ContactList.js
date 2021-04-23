@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import PropTypes from 'prop-types';
 import operations from '../../redux/operations';
@@ -9,9 +9,12 @@ import { Button } from 'react-bootstrap';
 export default function ContactList() {
   const dispatch = useDispatch();
   const contacts = useSelector(getVisibleContacts);
-  const onDeleteContact = id => {
-    dispatch(operations.deleteContact(id));
-  };
+  const onDeleteContact = useCallback(
+    id => {
+      dispatch(operations.deleteContact(id));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     dispatch(operations.fetchContacts());
